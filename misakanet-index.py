@@ -71,7 +71,15 @@ def build_index(lessons_dir: str | Path) -> list[dict]:
             "tags": fm.get("tags", []) if fm else [],
             "summary": extract_summary(content),
             "url": f"lessons/{f.name}",
+            "created": fm.get("created", "") if fm else "",
             "updated": fm.get("updated", "") if fm else "",
+            # 置信度衰减：环境变化后旧知识可能失效
+            "validity_period_days": fm.get("validity_period_days", 365) if fm else 365,
+            # 本 lesson 适用的环境版本（如 python=3.12, ubuntu=24.04）
+            "environment_version": fm.get("environment_version", "") if fm else "",
+            # 置信度 0-1：基于验证次数/用户反馈自动调整
+            "confidence": fm.get("confidence", 0.5) if fm else 0.5,
+            "status": fm.get("status", "active") if fm else "active",
         }
         index.append(entry)
 
