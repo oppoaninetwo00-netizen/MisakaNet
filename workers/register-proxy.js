@@ -22,6 +22,38 @@ export default {
       });
     }
 
+    // GET → 显示友好的信息页面
+    if (request.method === "GET") {
+      return new Response(`<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>MisakaNet Register Proxy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0d1117; color: #e6edf3; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+  .card { max-width: 500px; text-align: center; background: #161b22; border: 1px solid #30363d; border-radius: 16px; padding: 40px; }
+  h1 { color: #f0c040; font-size: 28px; margin-bottom: 8px; }
+  p { color: #8b949e; font-size: 14px; line-height: 1.7; }
+  code { background: #0d1117; padding: 3px 8px; border-radius: 4px; font-size: 13px; color: #7ee787; }
+  .btn { display: inline-block; margin-top: 20px; padding: 12px 24px; background: #238636; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+</style></head>
+<body>
+<div class="card">
+  <h1>⚡ MisakaNet</h1>
+  <p>这是御坂网络的注册代理端点。</p>
+  <p>前端表单通过此端点提交注册请求，<br>GitHub Token <strong>不会暴露给浏览器</strong>。</p>
+  <p style="margin-top:16px;font-size:12px;color:#484f58;">
+    用法: <code>POST /</code> 携带 <code>{"agent_type":"...", "node_name":"..."}</code>
+  </p>
+  <a class="btn" href="https://ikalus1988.github.io/MisakaNet/">← 返回注册页面</a>
+</div>
+</body>
+</html>`, {
+        status: 200,
+        headers: { "content-type": "text/html;charset=utf-8" },
+      });
+    }
+
+    // 非 GET/POST → 405
     if (request.method !== "POST") {
       return new Response(JSON.stringify({ error: "Method not allowed" }), {
         status: 405,
