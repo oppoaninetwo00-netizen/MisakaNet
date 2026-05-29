@@ -107,7 +107,7 @@ cd MisakaNet
 python3 search_knowledge.py "pip install timeout"
 ```
 
-> Zero dependencies. Pure Python stdlib. See also [Getting Started](docs/wiki/Getting-Started.md).
+> Zero dependencies. Pure Python stdlib. See also [Getting Started](docs/agents/node-injection.md).
 
 ---
 
@@ -232,7 +232,7 @@ python3 misakanet/scripts/queue_lesson.py \
 
 ## Contributing
 
-See [CONTRIBUTING.md](docs/wiki/Contributing.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 1. **Search first** — check if the lesson already exists
 2. **Write clearly** — Problem / Fix / Verify format
@@ -245,10 +245,10 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed design.
 
 ## Wiki
 
-- [Getting Started](docs/wiki/Getting-Started.md)
-- [Architecture](docs/wiki/Architecture.md)
-- [FAQ](docs/wiki/FAQ.md)
-- [Contributing](docs/wiki/Contributing.md)
+- [Getting Started](docs/agents/node-injection.md)
+- [Architecture](ARCHITECTURE.md)
+- [FAQ](docs/agents/knowledge-structure.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## License
 
