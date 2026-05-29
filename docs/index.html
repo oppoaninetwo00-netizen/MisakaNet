@@ -1143,9 +1143,9 @@ async function loadStats() {
 
     document.getElementById("total-nodes").textContent = totalNodes;
     document.getElementById("total-nodes").classList.remove("loading");
-    document.getElementById("total-suffix").textContent = `起始 10000 · 当前 ${current}`;
+    document.getElementById("total-suffix").textContent = (LANG === "en" ? `from 10000 · now ${current}` : `起始 10000 · 当前 ${current}`);
     document.getElementById("latest-number").textContent = current;
-    document.getElementById("latest-time").textContent = `更新 ${counter.updated.slice(0, 10)}`;
+    document.getElementById("latest-time").textContent = (LANG === "en" ? `updated ${counter.updated.slice(0, 10)}` : `更新 ${counter.updated.slice(0, 10)}`);
 
     try {
       const lessons = await fetchJSON(`${RAW_BASE}/lessons.json`);
@@ -1161,7 +1161,7 @@ async function loadStats() {
   } catch (err) {
     document.getElementById("total-nodes").textContent = "?";
     document.querySelectorAll(".loading-item").forEach(el => {
-      el.textContent = `加载失败: ${err.message}`;
+      el.textContent = LANG === "en" ? `Load failed: ${err.message}` : `加载失败: ${err.message}`;
       el.className = "error-item";
     });
   }
