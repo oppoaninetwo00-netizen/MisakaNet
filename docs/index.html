@@ -1012,7 +1012,6 @@ function switchLang(lang) {
   });
 }
 let LANG = localStorage.getItem('misakanet-lang') || (navigator.language.startsWith('zh') ? 'zh' : 'en');
-switchLang(LANG);
 const I18N = {
   zh: {
     siteTitle: 'MISAKA NETWORK',
@@ -1131,6 +1130,8 @@ const I18N = {
     agentUnknown: 'Unknown',
   }
 };
+
+switchLang(LANG);
 
 function t(key) { return I18N[LANG][key] || key; }
 
