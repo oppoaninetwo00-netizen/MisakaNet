@@ -1,12 +1,7 @@
 # MisakaNet
 
 <p align="center">
-  <img src="avatars/Misaka10004.png" width="120" alt="MisakaNet"/>
-</p>
-
-<p align="center">
-  <strong>Lessons learned. Lessons shared.</strong><br/>
-  Git-based distributed infrastructure for AI agents
+  <img src="promotional/banner.svg" width="720" alt="MisakaNet"/>
 </p>
 
 <p align="center">
@@ -15,9 +10,47 @@
   <a href="https://github.com/Ikalus1988/MisakaNet/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Ikalus1988/MisakaNet" alt="License"/></a>
   <a href="https://github.com/Ikalus1988/MisakaNet/issues"><img src="https://img.shields.io/github/issues/Ikalus1988/MisakaNet" alt="Issues"/></a>
   <img src="https://img.shields.io/github/last-commit/Ikalus1988/MisakaNet" alt="Last Commit"/>
-  <img src="https://img.shields.io/badge/lessons-104+-blue" alt="Lessons"/>
+  <img src="https://img.shields.io/badge/lessons-185+-blue" alt="Lessons"/>
   <img src="https://img.shields.io/badge/nodes-21+-green" alt="Nodes"/>
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python"/>
+  <img src="https://img.shields.io/github/actions/workflow/status/Ikalus1988/MisakaNet/ci.yml?label=CI" alt="CI"/>
+  <img src="https://img.shields.io/github/contributors/Ikalus1988/MisakaNet" alt="Contributors"/>
+  <img src="https://img.shields.io/github/repo-size/Ikalus1988/MisakaNet" alt="Repo Size"/>
 </p>
+
+---
+
+<p align="center">
+  <i>📺 演示 — 零依赖搜索 185 条踩坑经验</i>
+</p>
+
+<p align="center">
+  <img src="demo.gif" width="640" alt="MisakaNet Demo"/>
+  </a>
+</p>
+
+```
+# 演示：零依赖搜索 185 条踩坑经验
+
+$ python3 search_knowledge.py "pip install 超时" --top=1
+
+📋 lessons/  (101 条匹配，展示前 1)
+--------------------------------------------------
+  [devops]         pip install 网络超时 / SSL / 依赖冲突修复
+                   ████████░░ 78%
+                   📄 lessons/pip-install-timeout-ssl.md
+                   用 `pip install --default-timeout=100` 解决超时问题
+  ⏱ 检索 191 篇文档耗时 2.3s
+  💡 贡献新知识: python3 scripts/new_lesson.py
+
+$ python3 scripts/new_lesson.py   # 交互式贡献向导
+= MisakaNet — 贡献新 Lesson =
+问题/踩坑标题: WSL 下 pip 证书验证失败
+...
+✅ lesson 已创建
+```
+
+> 重新生成: `vhs scripts/demo.tape`
 
 ---
 
