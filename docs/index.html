@@ -1504,6 +1504,7 @@
 const REPO = "Ikalus1988/MisakaNet";
 const BASE = "https://api.github.com/repos/" + REPO;
 const RAW_BASE = "https://raw.githubusercontent.com/" + REPO + "/main";
+const DATA_BASE = "https://raw.githubusercontent.com/" + REPO + "/data";
 
 const AVATAR_URL = (id) => `${RAW_BASE}/avatars/Misaka${String(id).padStart(5, "0")}.png`;
 const SCARF_COLORS = [
@@ -1918,8 +1919,8 @@ function refreshStats() {
 
 async function loadStats() {
   const [counter, lessons] = await Promise.all([
-    fetchWithCache(`${RAW_BASE}/counter.json`, 'counter').catch(() => null),
-    fetchWithCache(`${RAW_BASE}/lessons.json`, 'lessons').catch(() => null),
+    fetchWithCache(`${DATA_BASE}/counter.json`, 'counter').catch(() => null),
+    fetchWithCache(`${DATA_BASE}/lessons.json`, 'lessons').catch(() => null),
   ]);
 
   if (counter) {
@@ -2195,7 +2196,7 @@ async function loadContributors() {
 
     let existingLessons = new Set();
     try {
-      const lessonsIndex = await fetchJSON(`${RAW_BASE}/lessons.json`);
+      const lessonsIndex = await fetchJSON(`${DATA_BASE}/lessons.json`);
       existingLessons = new Set(lessonsIndex.map(l => l.id));
     } catch(e) {}
 
