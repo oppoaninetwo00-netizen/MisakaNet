@@ -1165,6 +1165,70 @@
     border-bottom: 1px solid var(--cyan);
   }
 
+  /* ── Terminal-style input with $ prefix ── */
+  .terminal-input-wrap {
+    display: flex;
+    align-items: center;
+    max-width: 420px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    border-radius: 8px;
+    transition: all 0.25s;
+    padding: 0;
+  }
+  .terminal-input-wrap:focus-within {
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.08), inset 0 0 12px rgba(0, 229, 255, 0.02);
+    background: rgba(0, 229, 255, 0.03);
+  }
+  .terminal-input-prefix {
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+    color: var(--cyan);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    opacity: 0.6;
+    user-select: none;
+  }
+  .terminal-input-wrap .register-input {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    min-width: 0;
+  }
+  .terminal-input-wrap .register-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ── Cached data label ── */
+  .cached-label {
+    display: inline-block;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.08);
+    padding: 0 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+  }
+
+  /* ── Data refresh blur animation ── */
+  @keyframes dataRefresh {
+    0% { filter: blur(0); opacity: 1; }
+    20% { filter: blur(2px); opacity: 0.6; }
+    40% { filter: blur(0); opacity: 1; }
+    100% { filter: blur(0); opacity: 1; }
+  }
+  .refreshing {
+    animation: dataRefresh 0.6s ease-in-out;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 700px) {
     .header-inner { flex-direction: column; text-align: center; }
@@ -1316,17 +1380,23 @@
       <div style="margin-top:16px;">
         <div class="register-label" data-i18n="nodeNameLabel">节点名称（可选）</div>
         <div class="register-hint" data-i18n="nodeNameHint">留空则使用默认名称</div>
-        <input type="text" id="node-name" class="register-input"
-               data-i18n-placeholder="nodeNamePlaceholder"
-               placeholder="例如：太阳">
+        <div class="terminal-input-wrap">
+          <span class="terminal-input-prefix">$</span>
+          <input type="text" id="node-name" class="register-input"
+                 data-i18n-placeholder="nodeNamePlaceholder"
+                 placeholder="例如：太阳">
+        </div>
       </div>
 
       <div style="margin-top:12px;">
         <div class="register-label" data-i18n="inviteCodeLabel">邀请码（可选）</div>
         <div class="register-hint" data-i18n="inviteCodeHint">填邀请人用户名可关联</div>
-        <input type="text" id="invite-code" class="register-input"
-               data-i18n-placeholder="inviteCodePlaceholder"
-               placeholder="例如：Ikalus1988">
+        <div class="terminal-input-wrap">
+          <span class="terminal-input-prefix">$</span>
+          <input type="text" id="invite-code" class="register-input"
+                 data-i18n-placeholder="inviteCodePlaceholder"
+                 placeholder="例如：Ikalus1988">
+        </div>
       </div>
 
       <label class="register-checkbox-label">
@@ -1792,6 +1862,36 @@ async function fetchWithCache(url, cacheKey) {
   }
 }
 
+function showCacheLabels() {
+  const cached = localStorage.getItem(CACHE_PREFIX + 'counter');
+  const now = Date.now();
+  const isFromCache = cached && (now - JSON.parse(cached).ts < CACHE_TTL);
+  if (isFromCache) {
+    const labels = document.querySelectorAll('.stat-sub');
+    labels.forEach(el => {
+      if (!el.querySelector('.cached-label')) {
+        const tag = document.createElement('span');
+        tag.className = 'cached-label';
+        tag.textContent = LANG === 'en' ? 'CACHED' : '缓存';
+        el.appendChild(tag);
+      }
+    });
+  }
+}
+
+function refreshStats() {
+  // Blur animation on stat numbers
+  document.querySelectorAll('.stat-number').forEach(el => {
+    el.classList.remove('refreshing');
+    // Force reflow to restart animation
+    void el.offsetWidth;
+    el.classList.add('refreshing');
+  });
+  // Remove cached labels, then reload
+  document.querySelectorAll('.cached-label').forEach(el => el.remove());
+  loadStats();
+}
+
 async function loadStats() {
   const [counter, lessons] = await Promise.all([
     fetchWithCache(`${RAW_BASE}/counter.json`, 'counter').catch(() => null),
@@ -1814,6 +1914,8 @@ async function loadStats() {
     const countEl = document.getElementById("knowledge-count");
     animateCounter(countEl, lessons.length);
   }
+
+  showCacheLabels();
 
   loadRecentRegistrations();
   loadContributors();
